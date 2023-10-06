@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { NoteModule } from './note/note.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { ChudeModule } from './chude/chude.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ChudeModule,
   ],
 })
 export class AppModule {}
