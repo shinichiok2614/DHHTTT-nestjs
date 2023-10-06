@@ -1,29 +1,57 @@
+# version: '3.8'
+# services:
+#   dev-database:
+#     image: postgres:15.0
+#     container_name: dev-database
+#     ports:
+#       - 5434:5432 #pc:container
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: Abc123456789
+#       POSTGRES_DB: testdb
+#     networks:
+#       - nestjs-networks
+#   test-database:
+#     image: postgres:15.0
+#     container_name: test-database
+#     ports:
+#       - 5435:5432 #pc:container
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: Abc123456789
+#       POSTGRES_DB: testdb
+#     networks:
+#       - nestjs-networks
+# networks:
+#   nestjs-networks:
+#   # -d: deamon
+#   # docker compose up -d
+
 version: '3.8'
 services:
   dev-database:
-    image: postgres:15.0
+    image: mysql:8.1.0
     container_name: dev-database
     ports:
-      - 5434:5432 #pc:container
+      - 3308:3306 # pc:container
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Abc123456789
-      POSTGRES_DB: testdb
+      # MYSQL_ROOT_PASSWORD: Abc123456789
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: Abc123456789
     networks:
       - nestjs-networks
   test-database:
-    image: postgres:15.0
+    image: mysql:8.1.0
     container_name: test-database
     ports:
-      - 5435:5432 #pc:container
+      - 3307:3306 # pc:container
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Abc123456789
-      POSTGRES_DB: testdb
+      # MYSQL_ROOT_PASSWORD: Abc123456789
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: Abc123456789
     networks:
       - nestjs-networks
 networks:
   nestjs-networks:
-  # -d: deamon
-  # docker compose up -d
-  
