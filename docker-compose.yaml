@@ -9,6 +9,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Abc123456789
       POSTGRES_DB: testdb
+    volumes:
+      - /Users/pc/Desktop/repo/DHHTTT-nestjs/data:/var/lib/postgresql/data
     networks:
       - nestjs-networks
   test-database:
@@ -26,7 +28,6 @@ networks:
   nestjs-networks:
   # -d: deamon
   # docker compose up -d
-
 # version: '3.8'
 # services:
 #   dev-database:

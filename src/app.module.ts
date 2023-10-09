@@ -5,6 +5,10 @@ import { NoteModule } from './note/note.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ChudeModule } from './chude/chude.module';
+import { BaidangModule } from './baidang/baidang.module';
+import { DonviModule } from './donvi/donvi.module';
+import { BaocaoModule } from './baocao/baocao.module';
+import { NhiemvuModule } from './nhiemvu/nhiemvu.module';
 
 @Module({
   imports: [
@@ -16,6 +20,10 @@ import { ChudeModule } from './chude/chude.module';
       isGlobal: true,
     }),
     ChudeModule,
+    BaidangModule,
+    DonviModule,
+    BaocaoModule,
+    NhiemvuModule,
   ],
 })
 export class AppModule {}

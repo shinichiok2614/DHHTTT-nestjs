@@ -30,6 +30,8 @@ CREATE TABLE "BaiDang" (
     "tenBaiDang" TEXT NOT NULL,
     "idChuDe" INTEGER,
     "idBaoCao" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "BaiDang_pkey" PRIMARY KEY ("id")
 );
@@ -40,6 +42,8 @@ CREATE TABLE "BaoCao" (
     "name" TEXT NOT NULL,
     "idNhiemVu" INTEGER,
     "idDonVi" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "BaoCao_pkey" PRIMARY KEY ("id")
 );
@@ -55,7 +59,7 @@ CREATE TABLE "ChuDe" (
 -- CreateTable
 CREATE TABLE "DonVi" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
 
     CONSTRAINT "DonVi_pkey" PRIMARY KEY ("id")
 );
@@ -70,6 +74,8 @@ CREATE TABLE "NhiemVu" (
     "thoiHan" TIMESTAMP(3),
     "loaiTin" TEXT,
     "idTinhTrang" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "NhiemVu_pkey" PRIMARY KEY ("id")
 );
@@ -79,6 +85,8 @@ CREATE TABLE "NoiDung" (
     "id" SERIAL NOT NULL,
     "tenBaiDang" TEXT,
     "soLuong" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "NoiDung_pkey" PRIMARY KEY ("id")
 );
@@ -98,9 +106,9 @@ CREATE TABLE "Person" (
     "id" SERIAL NOT NULL,
     "firstname" TEXT,
     "lastname" TEXT,
-    "username" TEXT,
-    "password" TEXT,
-    "level" INTEGER NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "level" INTEGER,
     "idPermission" INTEGER,
     "phone" TEXT,
     "email" TEXT,
@@ -110,6 +118,8 @@ CREATE TABLE "Person" (
     "acedemicrank" TEXT,
     "armyrank" TEXT,
     "profilepicture" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
 );

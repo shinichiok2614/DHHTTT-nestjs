@@ -34,56 +34,62 @@ model Note{
   @@map("notes")
 }
 model BaiDang {
-  id         Int      @id @default(autoincrement())
-  tenBaiDang String
-  idChuDe    Int?
-  idBaoCao   Int?
-  ChuDe      ChuDe?   @relation(fields: [idChuDe], references: [id])
-  BaoCao     BaoCao?  @relation(fields: [idBaoCao], references: [id])
+  id              Int      @id @default(autoincrement())
+  tenBaiDang      String
+  idChuDe         Int?
+  idBaoCao        Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  ChuDe           ChuDe?   @relation(fields: [idChuDe], references: [id])
+  BaoCao          BaoCao?  @relation(fields: [idBaoCao], references: [id])
   @@index([idChuDe], name: "id_chu_de")
   @@index([idBaoCao], name: "id_bao_cao")
 }
 // Define the BaoCao model
 model BaoCao {
-  id         Int      @id @default(autoincrement())
-  name       String
-  idNhiemVu  Int?
-  idDonVi    Int?
-  NhiemVu    NhiemVu?   @relation(fields: [idNhiemVu], references: [id])
-  DonVi      DonVi?     @relation(fields: [idDonVi], references: [id])
-  baidangs   BaiDang[]
+  id              Int      @id @default(autoincrement())
+  name            String
+  idNhiemVu       Int?
+  idDonVi         Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  NhiemVu         NhiemVu?   @relation(fields: [idNhiemVu], references: [id])
+  DonVi           DonVi?     @relation(fields: [idDonVi], references: [id])
+  baidangs        BaiDang[]
   @@index([idNhiemVu], name: "id_nhiem_vu")
   @@index([idDonVi], name: "id_don_vi")
 }
 
 // Define the ChuDe model
 model ChuDe {
-  id          Int    @id @default(autoincrement())
-  name        String
-  baidangs    BaiDang[]
+id                Int    @id @default(autoincrement())
+name              String
+baidangs          BaiDang[]
 }
 
 // Define the DonVi model
 model DonVi {
-  id          Int    @id @default(autoincrement())
-  name        String?
-  baocaos     BaoCao[]
+id                Int    @id @default(autoincrement())
+name              String
+baocaos           BaoCao[]
 }
 
 // Define the NhiemVu model
 model NhiemVu {
-  id           Int      @id @default(autoincrement())
-  tenNhiemVu   String
-  idNoiDung    Int?
-  idNguoiGiao  Int?
-  ngayGiao     DateTime?
-  thoiHan      DateTime?
-  loaiTin      String?
-  idTinhTrang  Int?
-  NoiDung      NoiDung?     @relation(fields: [idNoiDung], references: [id])
-  Person       Person?      @relation(fields: [idNguoiGiao], references: [id])
-  TinhTrang    TinhTrang?   @relation(fields: [idTinhTrang], references: [id])
-  baocaos      BaoCao[]
+  id                Int      @id @default(autoincrement())
+  tenNhiemVu        String
+  idNoiDung         Int?
+  idNguoiGiao       Int?
+  ngayGiao          DateTime?
+  thoiHan           DateTime?
+  loaiTin           String?
+  idTinhTrang       Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  NoiDung           NoiDung?     @relation(fields: [idNoiDung], references: [id])
+  Person            Person?      @relation(fields: [idNguoiGiao], references: [id])
+  TinhTrang         TinhTrang?   @relation(fields: [idTinhTrang], references: [id])
+  baocaos           BaoCao[]
   @@index([idNoiDung], name: "id_noi_dung")
   @@index([idNguoiGiao], name: "id_nguoi_giao")
   @@index([idTinhTrang], name: "id_tinh_trang")
@@ -93,6 +99,8 @@ model NoiDung {
   id          Int    @id @default(autoincrement())
   tenBaiDang  String?
   soLuong     Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   nhiemvus    NhiemVu[]
 }
 model TinhTrang {
@@ -107,9 +115,9 @@ model Person {
   id              Int      @id @default(autoincrement())
   firstname       String?
   lastname        String?
-  username        String?
-  password        String?
-  level           Int
+  username        String
+  password        String
+  level           Int?
   idPermission    Int?
   phone           String?
   email           String?
@@ -119,6 +127,8 @@ model Person {
   acedemicrank    String?
   armyrank        String?
   profilepicture  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   Permission      Permission? @relation(fields: [idPermission], references: [id])
   nhiemvus        NhiemVu[]
 }
