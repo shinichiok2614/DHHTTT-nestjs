@@ -1,5 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsNumberString,
+  IsOptional,
+} from 'class-validator';
 
 export class InsertNhiemVuDTO {
   @IsNotEmpty()
@@ -13,11 +19,11 @@ export class InsertNhiemVuDTO {
   @Type(() => Number)
   idNguoiGiao: number;
 
-  @IsDate()
-  ngayGiao: Date;
+  @IsOptional()
+  ngayGiao: string;
 
-  @IsDate()
-  thoiHan: Date;
+  @IsOptional()
+  thoiHan: string;
 
   @IsOptional()
   loaiTin: string;

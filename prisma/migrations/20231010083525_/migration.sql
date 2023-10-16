@@ -7,21 +7,17 @@ CREATE TABLE "users" (
     "lastName" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "level" INTEGER,
+    "idPermission" INTEGER,
+    "phone" TEXT,
+    "dateofbirth" TEXT,
+    "address" TEXT,
+    "degree" TEXT,
+    "acedemicrank" TEXT,
+    "armyrank" TEXT,
+    "profilepicture" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "notes" (
-    "id" SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
-
-    CONSTRAINT "notes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -102,29 +98,6 @@ CREATE TABLE "TinhTrang" (
 );
 
 -- CreateTable
-CREATE TABLE "Person" (
-    "id" SERIAL NOT NULL,
-    "firstname" TEXT,
-    "lastname" TEXT,
-    "username" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "level" INTEGER,
-    "idPermission" INTEGER,
-    "phone" TEXT,
-    "email" TEXT,
-    "dateofbirth" TEXT,
-    "address" TEXT,
-    "degree" TEXT,
-    "acedemicrank" TEXT,
-    "armyrank" TEXT,
-    "profilepicture" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Permission" (
     "id" SERIAL NOT NULL,
     "name" TEXT,
@@ -160,7 +133,7 @@ CREATE INDEX "id_nguoi_giao" ON "NhiemVu"("idNguoiGiao");
 CREATE INDEX "id_tinh_trang" ON "NhiemVu"("idTinhTrang");
 
 -- AddForeignKey
-ALTER TABLE "notes" ADD CONSTRAINT "notes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users" ADD CONSTRAINT "users_idPermission_fkey" FOREIGN KEY ("idPermission") REFERENCES "Permission"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BaiDang" ADD CONSTRAINT "BaiDang_idChuDe_fkey" FOREIGN KEY ("idChuDe") REFERENCES "ChuDe"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -178,10 +151,7 @@ ALTER TABLE "BaoCao" ADD CONSTRAINT "BaoCao_idDonVi_fkey" FOREIGN KEY ("idDonVi"
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNoiDung_fkey" FOREIGN KEY ("idNoiDung") REFERENCES "NoiDung"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNguoiGiao_fkey" FOREIGN KEY ("idNguoiGiao") REFERENCES "Person"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNguoiGiao_fkey" FOREIGN KEY ("idNguoiGiao") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idTinhTrang_fkey" FOREIGN KEY ("idTinhTrang") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Person" ADD CONSTRAINT "Person_idPermission_fkey" FOREIGN KEY ("idPermission") REFERENCES "Permission"("id") ON DELETE SET NULL ON UPDATE CASCADE;

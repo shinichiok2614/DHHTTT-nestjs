@@ -88,6 +88,7 @@ export class AuthService {
       expiresIn: '1h',
       secret: this.configService.get('JWT_SECRET'),
     });
+    console.log(jwtString);
     return {
       accessToken: jwtString,
     };

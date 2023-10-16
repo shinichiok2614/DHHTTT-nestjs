@@ -5,11 +5,23 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
+datasource db { 
   provider = "postgresql"
   // provider = "mysql"
   url      = env("DATABASE_URL")
 }
+// model User{ //tên thực thể
+//   id              Int @id @default(autoincrement())
+//   email           String @unique //unique: không trùng nhau
+//   hashedPassword  String
+//   firstName       String?
+//   lastName        String?
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+//   notes           Note[]
+
+//   @@map("users") //tên bảng csdl thật
+// }
 model User{ //tên thực thể
   id              Int @id @default(autoincrement())
   email           String @unique //unique: không trùng nhau
@@ -18,21 +30,32 @@ model User{ //tên thực thể
   lastName        String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  notes           Note[]
+  // notes           Note[]
+  level           Int?
+  idPermission    Int?
+  phone           String?
+  dateofbirth     String?
+  address         String?
+  degree          String?
+  acedemicrank    String?
+  armyrank        String?
+  profilepicture  String?
+  Permission      Permission? @relation(fields: [idPermission], references: [id])
+  nhiemvus        NhiemVu[]
 
   @@map("users") //tên bảng csdl thật
 }
-model Note{
-  id              Int @id @default(autoincrement())
-  title           String
-  description     String
-  url             String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  userId          Int
-  user User @relation(fields: [userId], references: [id])
-  @@map("notes")
-}
+// model Note{
+//   id              Int @id @default(autoincrement())
+//   title           String
+//   description     String
+//   url             String
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+//   userId          Int
+//   user User @relation(fields: [userId], references: [id])
+//   @@map("notes")
+// }
 model BaiDang {
   id              Int      @id @default(autoincrement())
   tenBaiDang      String
@@ -84,10 +107,11 @@ model NhiemVu {
   thoiHan           DateTime?
   loaiTin           String?
   idTinhTrang       Int?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   NoiDung           NoiDung?     @relation(fields: [idNoiDung], references: [id])
-  Person            Person?      @relation(fields: [idNguoiGiao], references: [id])
+  // Person            Person?      @relation(fields: [idNguoiGiao], references: [id])
+  User              User?      @relation(fields: [idNguoiGiao], references: [id])
   TinhTrang         TinhTrang?   @relation(fields: [idTinhTrang], references: [id])
   baocaos           BaoCao[]
   @@index([idNoiDung], name: "id_noi_dung")
@@ -111,33 +135,34 @@ model TinhTrang {
   nhiemvus    NhiemVu[]
 }
 // Define the Person model
-model Person {
-  id              Int      @id @default(autoincrement())
-  firstname       String?
-  lastname        String?
-  username        String
-  password        String
-  level           Int?
-  idPermission    Int?
-  phone           String?
-  email           String?
-  dateofbirth     String?
-  address         String?
-  degree          String?
-  acedemicrank    String?
-  armyrank        String?
-  profilepicture  String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  Permission      Permission? @relation(fields: [idPermission], references: [id])
-  nhiemvus        NhiemVu[]
-}
+// model Person {
+//   id              Int      @id @default(autoincrement())
+//   firstname       String?
+//   lastname        String?
+//   username        String
+//   password        String
+//   level           Int?
+//   idPermission    Int?
+//   phone           String?
+//   email           String?
+//   dateofbirth     String?
+//   address         String?
+//   degree          String?
+//   acedemicrank    String?
+//   armyrank        String?
+//   profilepicture  String?
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+//   Permission      Permission? @relation(fields: [idPermission], references: [id])
+//   nhiemvus        NhiemVu[]
+// }
 model Permission {
   id            Int    @id @default(autoincrement())
   name          String?
   giaoNhiemVu   Boolean?
   baoCao        Boolean?
   thongKe       Boolean?
-  persons       Person[]
+  // persons       Person[]
+  users         User[]
 }
 
