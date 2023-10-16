@@ -16,6 +16,9 @@ CREATE TABLE "users" (
     "acedemicrank" TEXT,
     "armyrank" TEXT,
     "profilepicture" TEXT,
+    "bio" TEXT,
+    "languages" TEXT,
+    "gender" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );

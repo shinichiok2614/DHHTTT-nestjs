@@ -40,6 +40,9 @@ model User{ //tên thực thể
   acedemicrank    String?
   armyrank        String?
   profilepicture  String?
+  bio             String?
+  languages       String?
+  gender          String?
   Permission      Permission? @relation(fields: [idPermission], references: [id])
   nhiemvus        NhiemVu[]
 

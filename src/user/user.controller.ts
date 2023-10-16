@@ -1,11 +1,12 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, UseGuards, Patch, Body } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { Request } from 'express';
 import { GetUser } from '../decorator';
 import { MyJWTGuard } from '../guard';
+import { UserService } from './user.service';
+import { UpdateUserDTO } from './dto';
 @Controller('users')
 export class UserController {
+  constructor(private userService: UserService) {}
   // @UseGuards(AuthGuard('jwt'))
   @UseGuards(MyJWTGuard)
   @Get('me')
@@ -16,5 +17,20 @@ export class UserController {
     // return 'My Detail infomation';
     // return request.user;
     return user;
+  }
+  @UseGuards(MyJWTGuard)
+  @Get('about')
+  getUserById(@GetUser('id') userId: number) {
+    return this.userService.getUserById(userId);
+  }
+  @UseGuards(MyJWTGuard)
+  @Patch()
+  updateUserById(
+    @GetUser('sub') userId: number,
+    @Body() updateUserDTO: UpdateUserDTO,
+  ) {
+    console.log(userId);
+    console.log(updateUserDTO);
+    return this.userService.updateUser(userId, updateUserDTO);
   }
 }

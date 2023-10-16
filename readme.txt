@@ -17,3 +17,6 @@ nest g controller donvi --no-spec
 nest g module nhiemvu
 nest g controller nhiemvu --no-spec
 nest g service nhiemvu --no-spec
+
+auth: k useGuard, register, login
+user: useGuard, get, update
