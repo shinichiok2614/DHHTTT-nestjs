@@ -4,7 +4,7 @@ import { UpdateUserDTO } from './dto';
 
 @Injectable()
 export class UserService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
   async getUserById(id: number) {
     const user = await this.prismaService.user.findFirst({
       where: {
@@ -15,6 +15,7 @@ export class UserService {
     return user;
   }
   async updateUser(id: number, updateUserDTO: UpdateUserDTO) {
+    console.log('updateUser');
     const {
       firstName,
       lastName,
@@ -31,7 +32,7 @@ export class UserService {
       languages,
       gender,
     } = updateUserDTO;
-    return this.prismaService.user.update({
+    const data =await this.prismaService.user.update({
       where: {
         id,
       },
@@ -52,6 +53,8 @@ export class UserService {
         gender,
       },
     });
+    delete data.hashedPassword
+    return data
   }
   deleteUser(id: number) {
     return this.prismaService.user.delete({

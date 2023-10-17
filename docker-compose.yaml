@@ -9,8 +9,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Abc123456789
       POSTGRES_DB: testdb
-    volumes:
-      - /Users/pc/Desktop/repo/DHHTTT-nestjs/data:/var/lib/postgresql/data
+    # volumes:
+    #   - /Users/admin/Desktop/repo/DHHTTT-nestjs/data:/var/lib/postgresql/data
     networks:
       - nestjs-networks
   test-database:
