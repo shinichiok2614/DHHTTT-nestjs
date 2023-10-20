@@ -11,6 +11,7 @@ import { BaocaoModule } from './baocao/baocao.module';
 import { NhiemvuModule } from './nhiemvu/nhiemvu.module';
 import { NoidungModule } from './noidung/noidung.module';
 import { TinhtrangModule } from './tinhtrang/tinhtrang.module';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TinhtrangModule } from './tinhtrang/tinhtrang.module';
     NhiemvuModule,
     NoidungModule,
     TinhtrangModule,
+    PersonModule,
   ],
 })
 export class AppModule {}

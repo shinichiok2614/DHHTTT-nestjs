@@ -10,8 +10,6 @@ CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "hashedPassword" TEXT NOT NULL,
-    "firstName" TEXT,
-    "lastName" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -21,8 +19,6 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "Person" (
     "id" SERIAL NOT NULL,
-    "email" TEXT NOT NULL,
-    "hashedPassword" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -53,6 +49,7 @@ CREATE TABLE "BaiDang" (
     "idDonVi" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "tinhTrangId" INTEGER,
 
     CONSTRAINT "BaiDang_pkey" PRIMARY KEY ("id")
 );
@@ -62,6 +59,7 @@ CREATE TABLE "BaoCao" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "idNhiemVu" INTEGER,
+    "idTinhTrang" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -94,6 +92,8 @@ CREATE TABLE "NhiemVu" (
     "thoiHan" TIMESTAMP(3),
     "loaiTin" TEXT,
     "idTinhTrang" INTEGER,
+    "idDonVi" INTEGER,
+    "idChuDe" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -125,13 +125,10 @@ CREATE TABLE "TinhTrang" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Person_email_key" ON "Person"("email");
-
--- CreateIndex
 CREATE INDEX "id_don_vi_person" ON "Person"("idDonVi");
 
 -- CreateIndex
-CREATE INDEX "id_chu_de" ON "BaiDang"("idChuDe");
+CREATE INDEX "id_chu_de_baidang" ON "BaiDang"("idChuDe");
 
 -- CreateIndex
 CREATE INDEX "id_bao_cao" ON "BaiDang"("idBaoCao");
@@ -143,13 +140,19 @@ CREATE INDEX "id_don_vi_baidang" ON "BaiDang"("idDonVi");
 CREATE INDEX "id_nhiem_vu" ON "BaoCao"("idNhiemVu");
 
 -- CreateIndex
+CREATE INDEX "id_tinh_trang_baocao" ON "BaoCao"("idTinhTrang");
+
+-- CreateIndex
 CREATE INDEX "id_noi_dung" ON "NhiemVu"("idNoiDung");
 
 -- CreateIndex
 CREATE INDEX "id_nguoi_giao" ON "NhiemVu"("idNguoiGiao");
 
 -- CreateIndex
-CREATE INDEX "id_tinh_trang" ON "NhiemVu"("idTinhTrang");
+CREATE INDEX "id_tinh_trang_nhiemvu" ON "NhiemVu"("idTinhTrang");
+
+-- CreateIndex
+CREATE INDEX "id_chu_de_nhiemvu" ON "NhiemVu"("idChuDe");
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_id_fkey" FOREIGN KEY ("id") REFERENCES "Admin"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -170,7 +173,13 @@ ALTER TABLE "BaiDang" ADD CONSTRAINT "BaiDang_idBaoCao_fkey" FOREIGN KEY ("idBao
 ALTER TABLE "BaiDang" ADD CONSTRAINT "BaiDang_idDonVi_fkey" FOREIGN KEY ("idDonVi") REFERENCES "DonVi"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "BaiDang" ADD CONSTRAINT "BaiDang_tinhTrangId_fkey" FOREIGN KEY ("tinhTrangId") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "BaoCao" ADD CONSTRAINT "BaoCao_idNhiemVu_fkey" FOREIGN KEY ("idNhiemVu") REFERENCES "NhiemVu"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BaoCao" ADD CONSTRAINT "BaoCao_idTinhTrang_fkey" FOREIGN KEY ("idTinhTrang") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNoiDung_fkey" FOREIGN KEY ("idNoiDung") REFERENCES "NoiDung"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -180,3 +189,9 @@ ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNguoiGiao_fkey" FOREIGN KEY ("id
 
 -- AddForeignKey
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idTinhTrang_fkey" FOREIGN KEY ("idTinhTrang") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idDonVi_fkey" FOREIGN KEY ("idDonVi") REFERENCES "DonVi"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idChuDe_fkey" FOREIGN KEY ("idChuDe") REFERENCES "ChuDe"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -19,8 +19,6 @@ export class AuthService {
         data: {
           email: authDTO.email,
           hashedPassword: hashedPassword,
-          firstName: '',
-          lastName: '',
         },
         select: {
           //những phần sẽ được trả về trong return user
