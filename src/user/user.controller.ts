@@ -20,7 +20,7 @@ export class UserController {
   }
   @UseGuards(MyJWTGuard)
   @Get('about')
-  getUserById(@GetUser('id') userId: number) {
+  getUserById(@GetUser('sub') userId: number) {
     return this.userService.getUserById(userId);
   }
   @UseGuards(MyJWTGuard)

@@ -21,7 +21,7 @@ export class PersonService {
       languages,
       gender,
       idDonVi,
-      userId,
+      idUser,
     } = insertPerson;
     return this.prismaService.person.create({
       data: {
@@ -39,7 +39,14 @@ export class PersonService {
         languages,
         gender,
         idDonVi: Number(idDonVi),
-        userId: Number(userId),
+        idUser: Number(idUser),
+      },
+    });
+  }
+  getPerson(id: number) {
+    return this.prismaService.person.findFirst({
+      where: {
+        id,
       },
     });
   }

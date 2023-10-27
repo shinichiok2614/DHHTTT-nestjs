@@ -6,6 +6,7 @@ import { UpdateUserDTO } from './dto';
 export class UserService {
   constructor(private prismaService: PrismaService) {}
   async getUserById(id: number) {
+    console.log(id);
     const user = await this.prismaService.user.findFirst({
       where: {
         id,

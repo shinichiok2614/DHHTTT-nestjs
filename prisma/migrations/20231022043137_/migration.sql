@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
 
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
 );
@@ -12,6 +13,7 @@ CREATE TABLE "users" (
     "hashedPassword" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "idAdmin" INTEGER,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -35,7 +37,7 @@ CREATE TABLE "Person" (
     "languages" TEXT,
     "gender" TEXT,
     "idDonVi" INTEGER,
-    "userId" INTEGER,
+    "idUser" INTEGER,
 
     CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
 );
@@ -125,7 +127,13 @@ CREATE TABLE "TinhTrang" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE INDEX "id_admin_user" ON "users"("idAdmin");
+
+-- CreateIndex
 CREATE INDEX "id_don_vi_person" ON "Person"("idDonVi");
+
+-- CreateIndex
+CREATE INDEX "id_user_person" ON "Person"("idUser");
 
 -- CreateIndex
 CREATE INDEX "id_chu_de_baidang" ON "BaiDang"("idChuDe");
@@ -155,13 +163,13 @@ CREATE INDEX "id_tinh_trang_nhiemvu" ON "NhiemVu"("idTinhTrang");
 CREATE INDEX "id_chu_de_nhiemvu" ON "NhiemVu"("idChuDe");
 
 -- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_id_fkey" FOREIGN KEY ("id") REFERENCES "Admin"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users" ADD CONSTRAINT "users_idAdmin_fkey" FOREIGN KEY ("idAdmin") REFERENCES "Admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Person" ADD CONSTRAINT "Person_idDonVi_fkey" FOREIGN KEY ("idDonVi") REFERENCES "DonVi"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Person" ADD CONSTRAINT "Person_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Person" ADD CONSTRAINT "Person_idUser_fkey" FOREIGN KEY ("idUser") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BaiDang" ADD CONSTRAINT "BaiDang_idChuDe_fkey" FOREIGN KEY ("idChuDe") REFERENCES "ChuDe"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -63,5 +63,5 @@ export class InsertPersonDTO {
   @IsNumber()
   @Type(() => Number)
   @IsOptional()
-  userId: number;
+  idUser: number;
 }
