@@ -20,3 +20,5 @@ nest g service nhiemvu --no-spec
 
 auth: k useGuard, register, login
 user: useGuard, get, update
+
+yarn prisma db seed  : execute seed

@@ -12,6 +12,7 @@ datasource db {
 }
 
 model Admin {
+  //bảng này quy định quyền của các loại admin
   id    Int    @id @default(autoincrement())
   name  String
   users User[]
@@ -23,12 +24,11 @@ model User {
   hashedPassword String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  //trường này quy định user này áp dụng quyền nào đc quy định trong bảng admin
   idAdmin        Int?
-  // notes           Note[]
   persons        Person[]
   Admin          Admin?   @relation(fields: [idAdmin], references: [id])
 
-  // admin          Admin    @relation(fields: [id], references: [id])
   @@index([idAdmin], name: "id_admin_user")
   @@map("users") //tên bảng csdl thật
 }
@@ -55,7 +55,6 @@ model Person {
   idDonVi        Int?
   idUser         Int?
 
-  // Permission      Permission? @relation(fields: [idPermission], references: [id])
   nhiemvus NhiemVu[]
 
   DonVi DonVi? @relation(fields: [idDonVi], references: [id])
@@ -67,17 +66,6 @@ model Person {
   @@index([idUser], name: "id_user_person")
 }
 
-// model Note{
-//   id              Int @id @default(autoincrement())
-//   title           String
-//   description     String
-//   url             String
-//   createdAt       DateTime @default(now())
-//   updatedAt       DateTime @updatedAt
-//   userId          Int
-//   user User @relation(fields: [userId], references: [id])
-//   @@map("notes")
-// }
 model BaiDang {
   id          Int        @id @default(autoincrement())
   tenBaiDang  String
@@ -107,35 +95,47 @@ model BaoCao {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   NhiemVu     NhiemVu?   @relation(fields: [idNhiemVu], references: [id])
-  // DonVi     DonVi?    @relation(fields: [idDonVi], references: [id])
   baidangs    BaiDang[]
-  // @@index([idDonVi], name: "id_don_vi")
   TinhTrang   TinhTrang? @relation(fields: [idTinhTrang], references: [id])
 
   @@index([idNhiemVu], name: "id_nhiem_vu")
   @@index([idTinhTrang], name: "id_tinh_trang_baocao")
 }
 
-// Define the ChuDe model
+model ChuDeNhan {
+  id        Int      @id @default(autoincrement())
+  idNhiemVu Int
+  idChuDe   Int
+  NhiemVu   NhiemVu? @relation(fields: [idNhiemVu], references: [id])
+  ChuDe     ChuDe?   @relation(fields: [idChuDe], references: [id])
+}
+
 model ChuDe {
-  id       Int       @id @default(autoincrement())
-  name     String
-  baidangs BaiDang[]
-  NhiemVu  NhiemVu[]
+  id        Int         @id @default(autoincrement())
+  name      String
+  baidangs  BaiDang[]
+  NhiemVu   NhiemVu[]
+  ChuDeNhan ChuDeNhan[]
 }
 
-// Define the DonVi model
+model DonViNhan {
+  id        Int      @id @default(autoincrement())
+  idNhiemVu Int
+  idDonVi   Int
+  DonVi     DonVi?   @relation(fields: [idDonVi], references: [id])
+  NhiemVu   NhiemVu? @relation(fields: [idNhiemVu], references: [id])
+}
+
 model DonVi {
-  id       Int       @id @default(autoincrement())
-  name     String
-  baidangs BaiDang[]
-  persons  Person[]
-  nhiemvus NhiemVu[]
+  id        Int         @id @default(autoincrement())
+  name      String
+  persons   Person[]
+  baidangs  BaiDang[]
+  DonViNhan DonViNhan[]
 }
 
-// Define the NhiemVu model
 model NhiemVu {
-  id          Int        @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   tenNhiemVu  String
   idNoiDung   Int?
   idNguoiGiao Int?
@@ -143,25 +143,22 @@ model NhiemVu {
   thoiHan     DateTime?
   loaiTin     String?
   idTinhTrang Int?
-  idDonVi     Int?
   idChuDe     Int?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  NoiDung     NoiDung?   @relation(fields: [idNoiDung], references: [id])
-  Person      Person?    @relation(fields: [idNguoiGiao], references: [id])
-  // User              User?      @relation(fields: [idNguoiGiao], references: [id])
-  TinhTrang   TinhTrang? @relation(fields: [idTinhTrang], references: [id])
-  DonVi       DonVi?     @relation(fields: [idDonVi], references: [id])
-  ChuDe       ChuDe?     @relation(fields: [idChuDe], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  NoiDung     NoiDung?    @relation(fields: [idNoiDung], references: [id])
+  Person      Person?     @relation(fields: [idNguoiGiao], references: [id])
+  TinhTrang   TinhTrang?  @relation(fields: [idTinhTrang], references: [id])
   baocaos     BaoCao[]
+  DonViNhan   DonViNhan[]
+  ChuDe       ChuDe[]
+  ChuDeNhan   ChuDeNhan[]
 
   @@index([idNoiDung], name: "id_noi_dung")
   @@index([idNguoiGiao], name: "id_nguoi_giao")
   @@index([idTinhTrang], name: "id_tinh_trang_nhiemvu")
-  @@index([idChuDe], name: "id_chu_de_nhiemvu")
 }
 
-// Define the NoiDung model
 model NoiDung {
   id         Int       @id @default(autoincrement())
   tenBaiDang String?
@@ -180,35 +177,3 @@ model TinhTrang {
   baocaos   BaoCao[]
   baidangs  BaiDang[]
 }
-
-// Define the Person model
-// model Person {
-//   id              Int      @id @default(autoincrement())
-//   firstname       String?
-//   lastname        String?
-//   username        String
-//   password        String
-//   level           Int?
-//   idPermission    Int?
-//   phone           String?
-//   email           String?
-//   dateofbirth     String?
-//   address         String?
-//   degree          String?
-//   acedemicrank    String?
-//   armyrank        String?
-//   profilepicture  String?
-//   createdAt       DateTime @default(now())
-//   updatedAt       DateTime @updatedAt
-//   Permission      Permission? @relation(fields: [idPermission], references: [id])
-//   nhiemvus        NhiemVu[]
-// }
-// model Permission {
-//   id          Int      @id @default(autoincrement())
-//   name        String?
-//   giaoNhiemVu Boolean?
-//   baoCao      Boolean?
-//   thongKe     Boolean?
-//   // persons       Person[]
-//   users       User[]
-// }

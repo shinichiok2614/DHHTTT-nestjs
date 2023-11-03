@@ -35,7 +35,6 @@ async function main() {
       updatedAt: new Date(),
     },
   });
-
   const chuDe = await prisma.chuDe.create({
     data: {
       name: 'Chu De Name',
@@ -53,6 +52,20 @@ async function main() {
       tenNhiemVu: 'Nhiem Vu Name',
       createdAt: new Date(),
       updatedAt: new Date(),
+    },
+  });
+
+  const chuDeNhan = await prisma.chuDeNhan.create({
+    data: {
+      idNhiemVu: nhiemVu.id,
+      idChuDe: chuDe.id,
+    },
+  });
+
+  const donViNhan = await prisma.donViNhan.create({
+    data: {
+      idNhiemVu: nhiemVu.id,
+      idDonVi: donVi.id,
     },
   });
 

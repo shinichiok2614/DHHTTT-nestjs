@@ -31,4 +31,12 @@ export class InsertNhiemVuDTO {
   @IsNumber()
   @Type(() => Number)
   idTinhTrang: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  idDonVi: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  idChuDe: number;
 }

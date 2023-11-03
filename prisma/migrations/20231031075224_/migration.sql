@@ -69,11 +69,29 @@ CREATE TABLE "BaoCao" (
 );
 
 -- CreateTable
+CREATE TABLE "ChuDeNhan" (
+    "id" SERIAL NOT NULL,
+    "idNhiemVu" INTEGER NOT NULL,
+    "idChuDe" INTEGER NOT NULL,
+
+    CONSTRAINT "ChuDeNhan_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "ChuDe" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "ChuDe_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "DonViNhan" (
+    "id" SERIAL NOT NULL,
+    "idNhiemVu" INTEGER NOT NULL,
+    "idDonVi" INTEGER NOT NULL,
+
+    CONSTRAINT "DonViNhan_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -94,7 +112,6 @@ CREATE TABLE "NhiemVu" (
     "thoiHan" TIMESTAMP(3),
     "loaiTin" TEXT,
     "idTinhTrang" INTEGER,
-    "idDonVi" INTEGER,
     "idChuDe" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -121,6 +138,12 @@ CREATE TABLE "TinhTrang" (
     "hoanThanh" BOOLEAN,
 
     CONSTRAINT "TinhTrang_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_ChuDeToNhiemVu" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
@@ -160,7 +183,10 @@ CREATE INDEX "id_nguoi_giao" ON "NhiemVu"("idNguoiGiao");
 CREATE INDEX "id_tinh_trang_nhiemvu" ON "NhiemVu"("idTinhTrang");
 
 -- CreateIndex
-CREATE INDEX "id_chu_de_nhiemvu" ON "NhiemVu"("idChuDe");
+CREATE UNIQUE INDEX "_ChuDeToNhiemVu_AB_unique" ON "_ChuDeToNhiemVu"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_ChuDeToNhiemVu_B_index" ON "_ChuDeToNhiemVu"("B");
 
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_idAdmin_fkey" FOREIGN KEY ("idAdmin") REFERENCES "Admin"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -190,6 +216,18 @@ ALTER TABLE "BaoCao" ADD CONSTRAINT "BaoCao_idNhiemVu_fkey" FOREIGN KEY ("idNhie
 ALTER TABLE "BaoCao" ADD CONSTRAINT "BaoCao_idTinhTrang_fkey" FOREIGN KEY ("idTinhTrang") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "ChuDeNhan" ADD CONSTRAINT "ChuDeNhan_idNhiemVu_fkey" FOREIGN KEY ("idNhiemVu") REFERENCES "NhiemVu"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ChuDeNhan" ADD CONSTRAINT "ChuDeNhan_idChuDe_fkey" FOREIGN KEY ("idChuDe") REFERENCES "ChuDe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DonViNhan" ADD CONSTRAINT "DonViNhan_idDonVi_fkey" FOREIGN KEY ("idDonVi") REFERENCES "DonVi"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DonViNhan" ADD CONSTRAINT "DonViNhan_idNhiemVu_fkey" FOREIGN KEY ("idNhiemVu") REFERENCES "NhiemVu"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNoiDung_fkey" FOREIGN KEY ("idNoiDung") REFERENCES "NoiDung"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -199,7 +237,7 @@ ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idNguoiGiao_fkey" FOREIGN KEY ("id
 ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idTinhTrang_fkey" FOREIGN KEY ("idTinhTrang") REFERENCES "TinhTrang"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idDonVi_fkey" FOREIGN KEY ("idDonVi") REFERENCES "DonVi"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "_ChuDeToNhiemVu" ADD CONSTRAINT "_ChuDeToNhiemVu_A_fkey" FOREIGN KEY ("A") REFERENCES "ChuDe"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "NhiemVu" ADD CONSTRAINT "NhiemVu_idChuDe_fkey" FOREIGN KEY ("idChuDe") REFERENCES "ChuDe"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "_ChuDeToNhiemVu" ADD CONSTRAINT "_ChuDeToNhiemVu_B_fkey" FOREIGN KEY ("B") REFERENCES "NhiemVu"("id") ON DELETE CASCADE ON UPDATE CASCADE;

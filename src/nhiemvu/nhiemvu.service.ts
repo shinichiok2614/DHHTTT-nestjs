@@ -5,6 +5,11 @@ import { InsertNhiemVuDTO } from './dto/insert.nhiemvu.dto';
 @Injectable()
 export class NhiemvuService {
   constructor(private prismaService: PrismaService) {}
+
+  getNhiemVu() {
+    return this.prismaService.nhiemVu.findMany();
+  }
+
   insertNhiemVu(insertNhiemVuDTO: InsertNhiemVuDTO) {
     const {
       tenNhiemVu,
@@ -14,6 +19,8 @@ export class NhiemvuService {
       thoiHan,
       loaiTin,
       idTinhTrang,
+      idDonVi,
+      idChuDe,
     } = insertNhiemVuDTO;
     return this.prismaService.nhiemVu.create({
       data: {
@@ -24,6 +31,8 @@ export class NhiemvuService {
         thoiHan,
         loaiTin,
         idTinhTrang: Number(idTinhTrang),
+        idChuDe: Number(idChuDe),
+        // idDonVi: Number(idDonVi),
       },
     });
   }
