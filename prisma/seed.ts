@@ -11,12 +11,32 @@ async function main() {
 
   const user = await prisma.user.create({
     data: {
-      email: 'user@example.com',
+      email: 'admin@example.com',
       hashedPassword:
         '$argon2id$v=19$m=65536,t=3,p=4$e3OlM+UhXSnMtNuBtCdBVg$BNBn3F0JvdS0Dyj9rKupfPhsuF19qqj1mmZd0U+1SpY',
       createdAt: new Date(),
       updatedAt: new Date(),
       idAdmin: admin.id,
+    },
+  });
+  const user1 = await prisma.user.create({
+    data: {
+      email: 'trungdoan@example.com',
+      hashedPassword:
+        '$argon2id$v=19$m=65536,t=3,p=4$e3OlM+UhXSnMtNuBtCdBVg$BNBn3F0JvdS0Dyj9rKupfPhsuF19qqj1mmZd0U+1SpY',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      // idAdmin: admin.id,
+    },
+  });
+  const user2 = await prisma.user.create({
+    data: {
+      email: 'tieudoan@example.com',
+      hashedPassword:
+        '$argon2id$v=19$m=65536,t=3,p=4$e3OlM+UhXSnMtNuBtCdBVg$BNBn3F0JvdS0Dyj9rKupfPhsuF19qqj1mmZd0U+1SpY',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      // idAdmin: admin.id,
     },
   });
 
@@ -40,35 +60,37 @@ async function main() {
       name: 'Chu De Name',
     },
   });
+  const chuDe1 = await prisma.chuDe.create({
+    data: {
+      name: 'Chu De Name 1',
+    },
+  });
 
   const donVi = await prisma.donVi.create({
     data: {
-      name: 'Don Vi Name',
+      name: 'Quân Khu',
     },
   });
-
-  const nhiemVu = await prisma.nhiemVu.create({
+  const donVi1 = await prisma.donVi.create({
     data: {
-      tenNhiemVu: 'Nhiem Vu Name',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      name: 'Sư đoàn',
     },
   });
-
-  const chuDeNhan = await prisma.chuDeNhan.create({
+  const donVi2 = await prisma.donVi.create({
     data: {
-      idNhiemVu: nhiemVu.id,
-      idChuDe: chuDe.id,
+      name: 'Trung đoàn',
     },
   });
-
-  const donViNhan = await prisma.donViNhan.create({
+  const donVi3 = await prisma.donVi.create({
     data: {
-      idNhiemVu: nhiemVu.id,
-      idDonVi: donVi.id,
+      name: 'Tiểu đoàn',
     },
   });
-
+  const donVi4 = await prisma.donVi.create({
+    data: {
+      name: 'Đại đội',
+    },
+  });
   const noiDung = await prisma.noiDung.create({
     data: {
       tenBaiDang: 'Noi Dung Name',
@@ -79,16 +101,29 @@ async function main() {
 
   const tinhTrang = await prisma.tinhTrang.create({
     data: {
-      daNhan: true,
-      dangXuLy: false,
-      hoanThanh: false,
+      name: 'Chưa nhận',
+    },
+  });
+  const tinhTrang1 = await prisma.tinhTrang.create({
+    data: {
+      name: 'Đã nhận',
+    },
+  });
+  const tinhTrang2 = await prisma.tinhTrang.create({
+    data: {
+      name: 'Đang xử lý',
+    },
+  });
+  const tinhTrang3 = await prisma.tinhTrang.create({
+    data: {
+      name: 'Đã báo cáo',
     },
   });
 
   const person = await prisma.person.create({
     data: {
-      firstName: 'First Name',
-      lastName: 'Last Name',
+      firstName: 'Duẩn',
+      lastName: 'Phạm Quang',
       createdAt: new Date(),
       updatedAt: new Date(),
       level: 1,
@@ -102,8 +137,68 @@ async function main() {
       bio: 'This is a bio',
       languages: 'English, Vietnamese',
       gender: 'Male',
-      idDonVi: 1, // assuming a DonVi with id 1 exists
-      idUser: user.id, // from the previously created user
+      idDonVi: 3, // assuming a DonVi with id 1 exists
+      // idUser: user.id, // from the previously created user
+    },
+  });
+  const person1 = await prisma.person.create({
+    data: {
+      firstName: 'Tuấn',
+      lastName: 'Trần Nguyễn Minh',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      level: 1,
+      phone: '0123456789',
+      dateofbirth: '1990-01-01',
+      address: '123 Street, City, Country',
+      degree: 'Bachelor',
+      acedemicrank: 'Professor',
+      armyrank: 'General',
+      profilepicture: 'link-to-profile-picture',
+      bio: 'This is a bio',
+      languages: 'English, Vietnamese',
+      gender: 'Male',
+      idDonVi: 4, // assuming a DonVi with id 1 exists
+      // idUser: user.id, // from the previously created user
+    },
+  });
+
+  const nhiemVu = await prisma.nhiemVu.create({
+    data: {
+      tenNhiemVu: 'Nhiem Vu Name',
+      idNoiDung: 1,
+      idNguoiGiao: 1,
+      ngayGiao: '2023-11-03T08:26:11.005Z',
+      thoiHan: '2023-11-03T08:26:11.005Z',
+      idTinhTrang: 1,
+      idChuDe: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  });
+  const nhiemVu1 = await prisma.nhiemVu.create({
+    data: {
+      tenNhiemVu: 'Nhiem Vu Name 1',
+      idNoiDung: 1,
+      idNguoiGiao: 1,
+      ngayGiao: '2023-11-03T08:26:11.005Z',
+      thoiHan: '2023-11-03T08:26:11.005Z',
+      idTinhTrang: 1,
+      idChuDe: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  });
+  const donViNhan = await prisma.donViNhan.create({
+    data: {
+      idNhiemVu: nhiemVu.id,
+      idDonVi: donVi.id,
+    },
+  });
+  const chuDeNhan = await prisma.chuDeNhan.create({
+    data: {
+      idNhiemVu: nhiemVu.id,
+      idChuDe: chuDe.id,
     },
   });
 

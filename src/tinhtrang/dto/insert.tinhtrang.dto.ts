@@ -1,16 +1,8 @@
 import { Type } from 'class-transformer';
-import { IsBoolean } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class InsertTinhTrangDTO {
-  @IsBoolean()
-  @Type(() => Boolean)
-  daNhan: boolean;
-
-  @IsBoolean()
-  @Type(() => Boolean)
-  dangXuLy: boolean;
-
-  @IsBoolean()
-  @Type(() => Boolean)
-  hoanThanh: boolean;
+  @IsString()
+  @IsOptional()
+  name: string;
 }

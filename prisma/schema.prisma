@@ -170,9 +170,7 @@ model NoiDung {
 
 model TinhTrang {
   id        Int       @id @default(autoincrement())
-  daNhan    Boolean?
-  dangXuLy  Boolean?
-  hoanThanh Boolean?
+  name    String?
   nhiemvus  NhiemVu[]
   baocaos   BaoCao[]
   baidangs  BaiDang[]

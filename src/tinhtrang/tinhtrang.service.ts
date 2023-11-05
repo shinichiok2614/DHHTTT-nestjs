@@ -6,12 +6,10 @@ import { InsertTinhTrangDTO } from './dto';
 export class TinhtrangService {
   constructor(private prismaService: PrismaService) {}
   insertTinhTrang(insertTinhTrangDTO: InsertTinhTrangDTO) {
-    const { daNhan, dangXuLy, hoanThanh } = insertTinhTrangDTO;
+    const { name } = insertTinhTrangDTO;
     return this.prismaService.tinhTrang.create({
       data: {
-        daNhan: Boolean(daNhan),
-        dangXuLy: Boolean(dangXuLy),
-        hoanThanh: Boolean(hoanThanh),
+        name,
       },
     });
   }

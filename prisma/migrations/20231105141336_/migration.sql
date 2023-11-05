@@ -133,9 +133,7 @@ CREATE TABLE "NoiDung" (
 -- CreateTable
 CREATE TABLE "TinhTrang" (
     "id" SERIAL NOT NULL,
-    "daNhan" BOOLEAN,
-    "dangXuLy" BOOLEAN,
-    "hoanThanh" BOOLEAN,
+    "name" TEXT,
 
     CONSTRAINT "TinhTrang_pkey" PRIMARY KEY ("id")
 );
