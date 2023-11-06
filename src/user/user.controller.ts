@@ -33,4 +33,8 @@ export class UserController {
     console.log(updateUserDTO);
     return this.userService.updateUser(userId, updateUserDTO);
   }
+  
+  @UseGuards(MyJWTGuard)
+  @Get('all')
+  getAllUser(){return this.userService.getAllUser()}
 }

@@ -5,6 +5,67 @@ import { InsertPersonDTO } from './dto';
 @Injectable()
 export class PersonService {
   constructor(private prismaService: PrismaService) {}
+
+  getAllPerson() {
+    return this.prismaService.person.findMany({
+      include: {
+        DonVi: {
+          select: {
+            name: true,
+          },
+        },
+        User: {
+          select: {
+            email: true,
+          },
+        },
+      },
+    });
+  }
+
+  updatePersonByIdAdmin(id, insertPerson: InsertPersonDTO) {
+    const {
+      //   firstName,
+      //   lastName,
+      //   level,
+      //   phone,
+      //   dateofbirth,
+      //   address,
+      //   degree,
+      //   acedemicrank,
+      //   armyrank,
+      //   profilepicture,
+      //   bio,
+      //   languages,
+      //   gender,
+      //   idDonVi,
+      idUser,
+    } = insertPerson;
+    return this.prismaService.person.update({
+      where: {
+        id,
+      },
+      data: {
+        // ...insertPerson,
+        // firstName,
+        // lastName,
+        // level,
+        // phone,
+        // dateofbirth,
+        // address,
+        // degree,
+        // acedemicrank,
+        // armyrank,
+        // profilepicture,
+        // bio,
+        // languages,
+        // gender,
+        // idDonVi,
+        idUser: Number(idUser),
+      },
+    });
+  }
+
   insertPerson(insertPerson: InsertPersonDTO) {
     const {
       firstName,

@@ -22,3 +22,8 @@ auth: k useGuard, register, login
 user: useGuard, get, update
 
 yarn prisma db seed  : execute seed
+
+
+
+
+getNhiemVuUser chưa làm xong

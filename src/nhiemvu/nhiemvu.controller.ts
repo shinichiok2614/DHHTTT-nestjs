@@ -31,6 +31,7 @@ export class NhiemvuController {
     const user = await this.userService.getUserById(userId);
     // console.log(user.idAdmin);
     if (user.idAdmin == 1) return this.nhiemVuService.getNhiemVu();
+    else return this.nhiemVuService.getNhiemVuUser();
   }
 
   @Get(':id')

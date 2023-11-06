@@ -46,6 +46,14 @@ export class NhiemvuService {
     });
   }
 
+  getNhiemVuUser() {
+    return this.prismaService.nhiemVu.findMany({
+      where: {
+        
+      },
+    });
+  }
+
   getNhiemVuById(id: number) {
     return this.prismaService.nhiemVu.findUnique({
       where: {

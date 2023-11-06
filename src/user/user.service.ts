@@ -5,6 +5,17 @@ import { UpdateUserDTO } from './dto';
 @Injectable()
 export class UserService {
   constructor(private prismaService: PrismaService) {}
+
+  async getAllUser() {
+    const users = await this.prismaService.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        idAdmin: true,
+      },
+    });
+    return users;
+  }
   async getUserById(id: number) {
     // console.log(id);
     const user = await this.prismaService.user.findFirst({

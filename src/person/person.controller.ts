@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { InsertPersonDTO } from './dto';
 import { MyJWTGuard } from 'src/guard';
@@ -17,5 +17,17 @@ export class PersonController {
   @Get()
   getPerson(@GetUser('sub') userId: number) {
     return this.personService.getPerson(userId);
+  }
+
+  @UseGuards(MyJWTGuard)
+  @Get('all')
+  getAllPerson() {
+    return this.personService.getAllPerson();
+  }
+
+  @UseGuards(MyJWTGuard)
+  @Patch('/admin/:id')
+  updatePersonByIdAdmin(@Param('id', ParseIntPipe) id: number, @Body() updateDTO: InsertPersonDTO) {
+    return this.personService.updatePersonByIdAdmin(id, updateDTO);
   }
 }
